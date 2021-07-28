@@ -15,16 +15,18 @@ class APIController extends AbstractController
     }
 
     /**
-     * @Route("/api/send/{email}", name="api_send_email")
+     * @Route("/api/send/{email}", name="api_send_email", methods={"GET"})
      */
     public function SendEmail(string $email, \Swift_Mailer $mailer): JsonResponse
     {
+        // Récupération de la Request
         $request = Request::createFromGlobals();
         
-        $url = $this->generateUrl('api_signed_link');
-        // Le lien expirera après 10 minutes
-        $expiration = (new \DateTime('now'))->add(new \DateInterval('PT10M'));
+        // Création du lien signé
+        $url = $this->generateUrl('api_signed_link');        
+        $expiration = (new \DateTime('now'))->add(new \DateInterval('PT10M')); // Le lien expirera après 10 minutes
 
+        // Création du mail
         $message = (new \Swift_Message('Hello Email'))
         ->setFrom('send@example.com')
         ->setTo($email)
@@ -39,6 +41,8 @@ class APIController extends AbstractController
 
     /**
      * @Route("/api/link", name="api_signed_link", defaults={"_signed": true})
+     * 
+     * _signed : paramètre de UrlSignerBundle pour sécuriser la route
      */
     public function SignedLink(): JsonResponse
     {
