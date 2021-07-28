@@ -10,3 +10,4 @@ Attention : UrlSignerBundle avait des problèmes de dépendances sur mon projet,
 
 Pour tester l'API :
 - La route /api/send/{email} enverra un mail à l'adresse renseignée comportant un lien de connexion valable 10 minutes.
+- Exemple url Postman : http://127.0.0.1:8000/api/send/email@email.fr
