@@ -36,7 +36,7 @@ symfony server:start
 ```
 
 ## Utilisation
-- Via Postman (ou un autre outil), insérez l'adresse : http://127.0.0.1:8000/api/send/{email}
+- Via Postman (ou un autre outil), insérez l'adresse : http://127.0.0.1:8000/send/{email}
 - La variable {email} est à remplacer par votre adresse email
 - Vous devriez recevoir un mail contenant un lien valable 10 minutes vous permettant d'obtenir un Token d'authentification.
 
