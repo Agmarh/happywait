@@ -15,6 +15,14 @@ class AppFixtures extends Fixture
         $user->setEmail('guillaumeguegan@outlook.fr');
         $manager->persist($user);
 
+        $user = new User();
+        $user->setEmail('kevin@happywait.com');
+        $manager->persist($user);
+
+        //$user = new User();
+        //$user->setEmail('test@test.com');
+        //$manager->persist($user);
+
         $manager->flush();
     }
 }
