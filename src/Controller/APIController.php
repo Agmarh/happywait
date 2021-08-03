@@ -2,17 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use CoopTilleuls\UrlSignerBundle\UrlSigner\UrlSignerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class APIController extends AbstractController
 {
-    public function __construct(UrlSignerInterface $urlSigner) {
+    public function __construct(UrlSignerInterface $urlSigner, UserRepository $userRepository) {
         $this->urlSigner = $urlSigner;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -20,6 +24,12 @@ class APIController extends AbstractController
      */
     public function SendEmail(string $email, \Swift_Mailer $mailer): JsonResponse
     {   
+        $user = $this->userRepository->findOneByEmail($email);
+
+        if (!$user instanceof User) {
+            throw new NotFoundHttpException('Utilisateur inconnu');
+        }
+
         // Récupération de la Request
         $request = Request::createFromGlobals();
         
